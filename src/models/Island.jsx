@@ -12,13 +12,14 @@ import { useFrame, useThree } from '@react-three/fiber'
 import IslandScene from '../assets/3d/island.glb'
 import { a } from "@react-spring/three"
 
-const Island = ({isRotating, setIsRotating, setCurrentStage, generalMusic, setIsGeneralMusic, isPlayingRotation, setIsPlayingRotation, audioRef, isPlayingPlaneMusic, setIsPlayingPlaneMusic,...props}) => {
+const Island = ({isRotating, setIsRotating, setCurrentStage, generalMusic, setIsGeneralMusic, isPlayingRotation, setIsPlayingRotation, audioRef, isPlayingPlaneMusic, setIsPlayingPlaneMusic, setHasBeenRotateOnce, ...props}) => {
   
   const {gl, viewport} = useThree()
   const { nodes, materials } = useGLTF(IslandScene)
   const islandRef = useRef();
   const normalRotationSpeed = 0.006;
   const slowRotationSpeed = 0.003;
+  const slowerRotationSpeed = 0.002;
 
   const lastX = useRef(0)
   const rotationSpeed = useRef(0)
@@ -28,6 +29,7 @@ const Island = ({isRotating, setIsRotating, setCurrentStage, generalMusic, setIs
     e.stopPropagation();
     e.preventDefault();
     setIsRotating(true);
+    setHasBeenRotateOnce(true)
     if (generalMusic) {
       setIsPlayingPlaneMusic(true);
     }
@@ -115,10 +117,12 @@ const Island = ({isRotating, setIsRotating, setCurrentStage, generalMusic, setIs
       if (
         (normalizedRotation >= 5.45 && normalizedRotation <= 5.85) || // Stage 4
         (normalizedRotation >= 0.85 && normalizedRotation <= 1.3) ||  // Stage 3
-        (normalizedRotation >= 2.4 && normalizedRotation <= 2.6) ||   // Stage 2
+        
         (normalizedRotation >= 4.25 && normalizedRotation <= 4.75)    // Stage 1
       ) {
         currentSpeed = slowRotationSpeed; // Réduire la vitesse
+      }else if(normalizedRotation >= 2.4 && normalizedRotation <= 2.6){
+        currentSpeed = slowerRotationSpeed;
       }
   
       islandRef.current.rotation.y -= currentSpeed; // Appliquer la vitesse

@@ -11,6 +11,9 @@ import { soundoff, soundon } from '../assets/icons';
 import { SlControlPlay } from "react-icons/sl";
 import { CiPause1 } from "react-icons/ci";
 import planeFlying from "../assets/flying-plane.mp3";
+import { GrRotateRight } from "react-icons/gr";
+import { GiClick } from "react-icons/gi";
+import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 
 const Home = () => {
   const audioRef = useRef(new Audio(sakura));
@@ -27,6 +30,7 @@ const Home = () => {
   const [isPlayingRotation, setIsPlayingRotation] = useState(false);
   const [isPlayingPlaneMusic, setIsPlayingPlaneMusic] = useState(false);
   const [isVolumeOn, setIsVolumeOn] = useState(false);
+  const [hasBeenRotateOnce, setHasBeenRotateOnce] = useState(false)
 
   const checkSound = () => {
     if (isPlayingMusic) {
@@ -116,6 +120,7 @@ const Home = () => {
             audioRef={audioPlaneRef}
             isPlayingPlaneMusic={isPlayingPlaneMusic}
             setIsPlayingPlaneMusic={setIsPlayingPlaneMusic}
+            setHasBeenRotateOnce={setHasBeenRotateOnce}
           />
           <Plane
             scale={planeScale}
@@ -125,19 +130,33 @@ const Home = () => {
           />
         </Suspense>
       </Canvas>
-      <div className='absolute bottom-5 left-5'>
+      {
+        !hasBeenRotateOnce &&
+        <div className='absolute bottom-14 left-0 right-0 z-10 flex items-center justify-center '>
+          {/*<p className='text-xl w-1/2 text-center text-slate-600'>Faites tourner le modèle en saisissant l'avion avec votre souris ou actionnez le bouton play pour une rotation auto</p>*/}
+          <div className='container-rotate'>
+            <GrRotateRight className='rotate-fade text-4xl text-[#0092db]' />
+          </div>
+          <GiClick className='click text-4xl text-[#0092db] absolute' />
+        </div>
+      }
+      
+      <div className='absolute bottom-5 left-5 flex items-center justify-center gap-5'>
         <img src={!isPlayingMusic ? soundon : soundoff} alt="sound" className='w-10 h-10 cursor-pointer object-contain' onClick={() => setIsPlayingMusic(!isPlayingMusic)} />
+        {!hasBeenRotateOnce && <GoArrowLeft className='text-5xl arrow text-[#6056f2]'/>}
       </div>
-      <div className='absolute bottom-5 right-5'>
-        <button
-          className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700 flex items-center justify-center mt-2 shadow-xl shadow-outline"
-          onClick={() => {
-            setIsPlayingRotation(!isPlayingRotation);
-            checkSound();
-          }}
-        >
-          {!isPlayingRotation ? <SlControlPlay /> : <CiPause1 />}
-        </button>
+      <div className='absolute bottom-5 right-5 flex items-center gap-5'>
+      {!hasBeenRotateOnce && <GoArrowRight className='text-5xl arrow text-[#6056f2]'/>}
+      <button
+        className="w-10 h-10 bg-[#6056f2] rounded-full cursor-pointer flex items-center justify-center"
+        onClick={() => {
+          setIsPlayingRotation(!isPlayingRotation);
+          checkSound();
+          setHasBeenRotateOnce(true)
+        }}
+      >
+        {!isPlayingRotation ? <SlControlPlay className="text-white" /> : <CiPause1 className="text-white" />}
+      </button>
       </div>
     </section>
   );

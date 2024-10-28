@@ -181,3 +181,47 @@ body:has(.card[data-color="green"]:hover) {
   box-shadow: 0.6vmin 0.6vmin #fff, 1vmin 1vmin #d2e4ff, 1vmin 1vmin #d2e4ff,
     0.65vmin 1vmin #d2e4ff, 1vmin 0.65vmin #d2e4ff;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes bounce {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+
+.fade-in-text {
+  animation: fadeIn 2s ease-in-out alternate infinite;
+}
+.rotate-fade {
+  animation: fadeIn 4s ease-in-out alternate infinite, rotate 2s linear infinite;
+}
+.container-rotate{
+  animation: bounce 2s linear infinite alternate;
+}
+.click {
+  opacity: 0;
+  animation: fadeIn 4s ease-in-out infinite alternate, bounce 1s ease-in-out infinite alternate;
+  animation-delay: 4s
+}
+.arrow{
+  opacity: 0;
+  animation: fadeIn 2s ease-in-out infinite alternate, bounce 1s ease-in-out infinite alternate;
+}
