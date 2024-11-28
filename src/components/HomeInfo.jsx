@@ -1,5 +1,6 @@
 import React from 'react';
 import { arrow } from '../assets/icons';
+import { Link } from 'react-router-dom';
 
 function stopMusic(setIsPlayingMusic, setIsRotating){
     setIsPlayingMusic(false)
@@ -9,8 +10,8 @@ function stopMusic(setIsPlayingMusic, setIsRotating){
 const InfoBox = ({ text, link, btnText, setIsPlayingMusic, setIsRotating, setIsPlayingRotation }) => (
     <div className='info-box'>
       <p className='font-medium sm:text-xl text-center'>{text}</p>
-      <a 
-        href={link} 
+      <Link 
+        to={link} 
         className='neo-brutalism-white neo-btn' 
         target='_blank' 
         rel='noreferrer' 
@@ -21,7 +22,7 @@ const InfoBox = ({ text, link, btnText, setIsPlayingMusic, setIsRotating, setIsP
       >
         {btnText}
         <img src={arrow} className='w-4 h-4 object-contain' />
-      </a>
+      </Link>
     </div>
   );
 
@@ -38,7 +39,7 @@ const renderContent = (setIsPlayingMusic, setIsRotating, setIsPlayingRotation) =
   2: (
     <InfoBox 
       text="Worked with many companies and picked up many skills along the way"
-      link="https://aurelienallenic.fr"
+      link="/about"
       btnText="Learn more"
       setIsPlayingMusic={setIsPlayingMusic}
       setIsRotating={setIsRotating}
@@ -48,7 +49,7 @@ const renderContent = (setIsPlayingMusic, setIsRotating, setIsPlayingRotation) =
   3: (
     <InfoBox 
       text="Led multiple projects to success over the years. Curious about the impact ?"
-      link="https://aurelienallenic.fr/#portfolio"
+      link="/projects"
       btnText="Visit my portfolio"
       setIsPlayingMusic={setIsPlayingMusic}
       setIsRotating={setIsRotating}
@@ -58,7 +59,7 @@ const renderContent = (setIsPlayingMusic, setIsRotating, setIsPlayingRotation) =
   4: (
     <InfoBox 
       text="Need a project done or looking for a dev ? I'm just a few keystrokes away"
-      link="https://aurelienallenic.fr/#contact"
+      link="/contact"
       btnText="Let's talk"
       setIsPlayingMusic={setIsPlayingMusic}
       setIsRotating={setIsRotating}
